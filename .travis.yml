@@ -6,6 +6,8 @@ julia:
     - 0.4
     - nightly
 sudo: required
+git:
+    depth: 999999
 notifications:
     email: false
 script:

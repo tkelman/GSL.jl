@@ -6,6 +6,7 @@ julia:
     - 0.4
     - nightly
 sudo: required
+dist: trusty
 git:
     depth: 999999
 notifications:

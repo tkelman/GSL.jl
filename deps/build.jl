@@ -32,14 +32,21 @@ provides(BuildProcess, Autotools(libtarget = "libgsl.la"), libgsl)
 load_cache = Dict() # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 781:
         pre_hooks = Set{AbstractString}() # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 782:
         load_hooks = Set{AbstractString}() # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 783:
-        if bindeps_context.do_install # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 784:
+        #if bindeps_context.do_install # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 784:
             for d = bindeps_context.deps # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 785:
+            @show d
                 p = BinDeps.satisfy!(d) # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 786:
+                @show p
                 libs = BinDeps._find_library(d; provider=p) # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 787:
+                @show libs
+                @show isa(d,BinDeps.LibraryGroup)
                 if isa(d,BinDeps.LibraryGroup) # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 788:
                     if !(isempty(libs)) # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 789:
                         for dep = d.deps # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 790:
+                        @show dep
+                        @show BinDeps.applicable(dep) 
                             !(BinDeps.applicable(dep)) && continue # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 791:
+                            @show haskey(load_cache,dep.name)
                             if !(haskey(load_cache,dep.name)) # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 792:
                                 load_cache[dep.name] = (libs[dep])[2] # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 793:
                                 opts = ((libs[dep])[1])[2] # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 794:
@@ -50,6 +57,9 @@ load_cache = Dict() # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line
                     end
                 else  # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 800:
                     for (k,v) = libs # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 801:
+                    @show k
+                    @show v
+                    @show haskey(load_cache,d.name)
                         if !(haskey(load_cache,d.name)) # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 802:
                             load_cache[d.name] = v # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 803:
                             opts = k[2] # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 804:
@@ -66,6 +76,7 @@ load_cache = Dict() # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line
             println(depsfile,"# Macro to load a library\nmacro checked_lib(libname, path)\n    ((VERSION >= v\"0.4.0-dev+3844\" ? Base.Libdl.dlopen_e : Base.dlopen_e)(path) == C_NULL) && error(\"Unable to load \\n\\n\$libname (\$path)\\n\\nPlease re-run Pkg.build(package), and restart Julia.\")\n    quote const \$(esc(libname)) = \$path end\nend\n") # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 827:
             println(depsfile,"# Load dependencies") # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 828:
             for libkey = keys(Dict(:libgsl=>:libgsl)) # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 829:
+            @show libkey
                 (cached = get(load_cache,string(libkey),nothing)) === nothing && continue # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 830:
                 println(depsfile,"@checked_lib ",(Dict(:libgsl=>:libgsl))[libkey]," \"",escape_string(cached),"\"")
             end # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 832:
@@ -73,5 +84,5 @@ load_cache = Dict() # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line
             println(depsfile,"# Load-hooks") # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 834:
             println(depsfile,join(load_hooks,"\n")) # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 835:
             close(depsfile)
-        end
+        #end
         

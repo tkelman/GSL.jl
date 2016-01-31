@@ -66,7 +66,7 @@ load_cache = Dict() # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line
             println(depsfile,"# Macro to load a library\nmacro checked_lib(libname, path)\n    ((VERSION >= v\"0.4.0-dev+3844\" ? Base.Libdl.dlopen_e : Base.dlopen_e)(path) == C_NULL) && error(\"Unable to load \\n\\n\$libname (\$path)\\n\\nPlease re-run Pkg.build(package), and restart Julia.\")\n    quote const \$(esc(libname)) = \$path end\nend\n") # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 827:
             println(depsfile,"# Load dependencies") # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 828:
             for libkey = keys(Dict(:libgsl=>:libgsl)) # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 829:
-                (cached = get(load_cache,string(libkey),nothing)) === nothing && $(Expr(:continue)) # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 830:
+                (cached = get(load_cache,string(libkey),nothing)) === nothing && continue # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 830:
                 println(depsfile,"@checked_lib ",(Dict(:libgsl=>:libgsl))[libkey]," \"",escape_string(cached),"\"")
             end # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 832:
             println(depsfile) # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 833:

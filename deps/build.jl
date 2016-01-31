@@ -33,7 +33,8 @@ load_cache = Dict() # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line
         pre_hooks = Set{AbstractString}() # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 782:
         load_hooks = Set{AbstractString}() # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 783:
         #if bindeps_context.do_install # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 784:
-            for d = bindeps_context.deps # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 785:
+            #for d = bindeps_context.deps # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 785:
+            d = bindeps_context.deps[1]
             @show d
                 p = BinDeps.satisfy!(d) # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 786:
                 @show p
@@ -68,7 +69,7 @@ load_cache = Dict() # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line
                         end
                     end
                 end
-            end # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 812:
+            #end # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 812:
             depsfile = open(joinpath((splitdir(Base.source_path()))[1],"deps.jl"),"w") # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 813:
             println(depsfile,"# This is an auto-generated file; do not edit\n") # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 817:
             println(depsfile,"# Pre-hooks") # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 818:

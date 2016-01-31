@@ -39,7 +39,7 @@ load_cache = Dict() # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line
                 if isa(d,BinDeps.LibraryGroup) # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 788:
                     if !(isempty(libs)) # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 789:
                         for dep = d.deps # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 790:
-                            !(BinDeps.applicable(dep)) && $(Expr(:continue)) # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 791:
+                            !(BinDeps.applicable(dep)) && continue # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 791:
                             if !(haskey(load_cache,dep.name)) # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 792:
                                 load_cache[dep.name] = (libs[dep])[2] # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 793:
                                 opts = ((libs[dep])[1])[2] # /home/travis/.julia/v0.4/BinDeps/src/dependencies.jl, line 794:

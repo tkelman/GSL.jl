@@ -12,7 +12,8 @@ git:
 notifications:
     email: false
 script:
+    - env
     - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
-    - julia -e 'Pkg.clone(pwd()); Pkg.build("GSL"); Pkg.test("GSL"; coverage=true)';
+    - julia -e 'Pkg.clone(pwd()); @show LOAD_PATH; Pkg.build("GSL"); Pkg.test("GSL"; coverage=true)';
 after_success:
     - julia -e 'Pkg.add("Coverage"); cd(Pkg.dir("GSL")); using Coverage; Coveralls.submit(process_folder()); Codecov.submit(process_folder())'

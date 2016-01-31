@@ -27,5 +27,5 @@ end
 provides(Sources, URI("http://ftp.gnu.org/gnu/gsl/gsl-1.16.tar.gz"), libgsl)
 provides(BuildProcess, Autotools(libtarget = "libgsl.la"), libgsl)
 
-@BinDeps.install @compat Dict(:libgsl => :libgsl)
-
+@show macroexpand(:(@BinDeps.install Dict(:libgsl => :libgsl)))
+eval(macroexpand(:(@BinDeps.install Dict(:libgsl => :libgsl))))
